@@ -1,6 +1,3 @@
 server:
   port: 8081
 
-udp:
-  port: 50000
-  maxUdpDataSize: 128

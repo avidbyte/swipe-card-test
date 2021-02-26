@@ -1,13 +1,14 @@
 package com.example.udptest.controller;
 
-import com.example.udptest.service.MsgReceiverService;
-import com.example.udptest.service.MsgSenderService;
+import com.example.udptest.entity.ControllerReceiveMessage;
+import com.example.udptest.server.UdpSocketServer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.net.SocketException;
+import java.io.IOException;
+
+
 
 /**
  * @author aaron
@@ -18,16 +19,12 @@ import java.net.SocketException;
 @RequestMapping("/slot-card")
 public class SlotCardController {
 
-    @Resource
-    private MsgReceiverService msgReceiverService;
-
-    @Resource
-    private MsgSenderService msgSenderService;
 
     @GetMapping("/test")
-    public void test() throws SocketException {
-        msgSenderService.sendCrMsg();
-        msgReceiverService.executeUdpMsg();
+    public void test(String ip,int port) throws IOException {
+        UdpSocketServer udpSocketServer = new UdpSocketServer();
+        byte[] msg = new ControllerReceiveMessage().getMessage();
+        udpSocketServer.sendMsg(ip,port,msg);
     }
 
 }
